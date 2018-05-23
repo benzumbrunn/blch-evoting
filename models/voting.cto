@@ -29,10 +29,13 @@ asset PollAsset identified by PollId {
 }
 
 transaction VoteTransaction {
-  o DateTime date
+  o DateTime Date
   o String PollId
   o VoteType Type
 }
 
 event ViolationEvent {
+  o DateTime Date
+  o String PollId
+  o String ViolationMessage
 }

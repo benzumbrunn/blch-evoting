@@ -7,18 +7,10 @@ rule Admin {
     action: ALLOW
 }
 
-rule Default {
-    description: "Allow read access"
-    participant: "ch.fhnw.voting.*"
-    operation: ALL
-    resource: "ch.fhnw.voting.*"
-    action: DENY
-}
-
 rule ReadVoter {
     description: "Allow read access"
     participant(i): "ch.fhnw.voting.Voter"
-    operation: READ
+    operation: READ, UPDATE
     resource(a): "ch.fhnw.voting.Voter"
     condition: (a.userId === i.userId)
     action: ALLOW
@@ -26,8 +18,8 @@ rule ReadVoter {
 
 rule ReadPoll {
     description: "Allow read access"
-    participant: "ch.fhnw.voting.*"
-    operation: READ
+    participant: "ch.fhnw.voting.**"
+    operation: READ, UPDATE
     resource: "ch.fhnw.voting.PollAsset"
     action: ALLOW
 }
@@ -40,12 +32,26 @@ rule SystemACL {
     action: ALLOW
 }
 
+rule NetworkAdmin{
+  description: "Give Acces to all to the Network Admin"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "ch.fhnw.voting.**"
+  action: ALLOW
+}
+
 rule VoteTransaction {
-    description: "Ruel for voting"
-    participant(m): "ch.fhnw.voting.Voter"
+    description: "Rule for voting"
+    participant: "ch.fhnw.voting.Voter"
     operation: ALL
-    resource(v): "ch.fhnw.voting.PollAsset"
-    transaction(tx): "ch.fhnw.voting.VoteTransaction"
-    condition: (v.owner.getIdentifier() == m.getIdentifier())
+    resource: "ch.fhnw.voting.VoteTransaction"
     action: ALLOW
+}
+
+rule Default {
+    description: "Allow read access"
+    participant: "ch.fhnw.voting.*"
+    operation: ALL
+    resource: "ch.fhnw.voting.*"
+    action: DENY
 }
