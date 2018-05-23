@@ -10,8 +10,25 @@ rule Admin {
 rule Default {
     description: "Allow read access"
     participant: "ch.fhnw.voting.*"
-    operation: READ
+    operation: ALL
     resource: "ch.fhnw.voting.*"
+    action: DENY
+}
+
+rule ReadVoter {
+    description: "Allow read access"
+    participant(i): "ch.fhnw.voting.Voter"
+    operation: READ
+    resource(a): "ch.fhnw.voting.Voter"
+    condition: (a.userId === i.userId)
+    action: ALLOW
+}
+
+rule ReadPoll {
+    description: "Allow read access"
+    participant: "ch.fhnw.voting.*"
+    operation: READ
+    resource: "ch.fhnw.voting.PollAsset"
     action: ALLOW
 }
 

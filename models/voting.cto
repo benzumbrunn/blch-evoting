@@ -1,7 +1,7 @@
 namespace ch.fhnw.voting
 
 enum VoteType {
-  o Yes
+  o YES
   o NO
 }
 
@@ -9,6 +9,7 @@ participant Voter identified by userId {
   o String userId
   o String firstname
   o String lastname
+  o String[] PollsVotedId
 }
 
 participant Admin extends Voter {
@@ -31,4 +32,7 @@ transaction VoteTransaction {
   o DateTime date
   o String PollId
   o VoteType Type
+}
+
+event ViolationEvent {
 }
