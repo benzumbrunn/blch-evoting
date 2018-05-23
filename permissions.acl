@@ -1,0 +1,34 @@
+rule Admin {
+    description: "Can create new Polls"
+    participant(i): "ch.fhnw.voting.Admin"
+    operation: ALL
+    resource(a): "ch.fhnw.voting.PollAsset"
+    condition: (a.poll.Creator.userId === i.userId)
+    action: ALLOW
+}
+
+rule Default {
+    description: "Allow read access"
+    participant: "ch.fhnw.voting.*"
+    operation: READ
+    resource: "ch.fhnw.voting.*"
+    action: ALLOW
+}
+
+rule SystemACL {
+    description:  "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule VoteTransaction {
+    description: "Ruel for voting"
+    participant(m): "ch.fhnw.voting.Voter"
+    operation: ALL
+    resource(v): "ch.fhnw.voting.PollAsset"
+    transaction(tx): "ch.fhnw.voting.Vote"
+    condition: (v.owner.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+}

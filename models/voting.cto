@@ -15,6 +15,7 @@ participant Admin extends Voter {
 }
 
 concept Poll {
+  o Admin Creator
   o String Name
   o String Description
   o Integer Yes
@@ -26,7 +27,7 @@ asset PollAsset identified by PollId {
   o Poll poll
 }
 
-transaction Vote {
+transaction VoteTransaction {
   o DateTime date
   o String PollId
   o VoteType Type
