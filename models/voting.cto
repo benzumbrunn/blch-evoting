@@ -16,7 +16,7 @@ participant Admin extends Voter {
 }
 
 concept Poll {
-  o Admin Creator
+  o String CreatorId
   o String Name
   o String Description
   o Integer Yes

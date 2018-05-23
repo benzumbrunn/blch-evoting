@@ -3,7 +3,7 @@ rule AdminPolls {
     participant(i): "ch.fhnw.voting.Admin"
     operation: ALL
     resource(a): "ch.fhnw.voting.PollAsset"
-    condition: (a.poll.Creator.userId === i.userId)
+    condition: (a.poll.CreatorId === i.userId)
     action: ALLOW
 }
 
