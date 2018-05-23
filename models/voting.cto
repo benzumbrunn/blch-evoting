@@ -1,0 +1,33 @@
+namespace ch.fhnw.voting
+
+enum VoteType {
+  o Yes
+  o NO
+}
+
+participant Voter identified by userId {
+  o String userId
+  o String firstname
+  o String lastname
+}
+
+participant Admin extends Voter {
+}
+
+concept Poll {
+  o String Name
+  o String Description
+  o Integer Yes
+  o Integer No
+}
+
+asset PollAsset identified by PollId {
+  o String PollId
+  o Poll poll
+}
+
+transaction Vote {
+  o DateTime date
+  o String PollId
+  o VoteType Type
+}
