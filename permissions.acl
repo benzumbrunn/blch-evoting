@@ -1,4 +1,4 @@
-rule Admin {
+rule AdminPolls {
     description: "Can create new Polls"
     participant(i): "ch.fhnw.voting.Admin"
     operation: ALL
@@ -7,11 +7,29 @@ rule Admin {
     action: ALLOW
 }
 
+rule AdminVoter {
+    description: "Can create new Voter"
+    participant: "ch.fhnw.voting.Admin"
+    operation: ALL
+    resource: "ch.fhnw.voting.Voter"
+    action: ALLOW
+}
+
 rule ReadVoter {
     description: "Allow read access"
     participant(i): "ch.fhnw.voting.Voter"
+    operation: READ
+    resource(a): "ch.fhnw.voting.Voter"
+    condition: (a.userId === i.userId)
+    action: ALLOW
+}
+
+rule UpdateVoter{
+    description: "Allow read and update access for the VoteTransaction"
+    participant(i): "ch.fhnw.voting.Voter"
     operation: READ, UPDATE
     resource(a): "ch.fhnw.voting.Voter"
+    transaction(tx): "ch.fhnw.voting.VoteTransaction"
     condition: (a.userId === i.userId)
     action: ALLOW
 }
@@ -19,8 +37,17 @@ rule ReadVoter {
 rule ReadPoll {
     description: "Allow read access"
     participant: "ch.fhnw.voting.**"
-    operation: READ, UPDATE
+    operation: READ
     resource: "ch.fhnw.voting.PollAsset"
+    action: ALLOW
+}
+
+rule UpdatePoll {
+    description: "Allow read access"
+    participant: "ch.fhnw.voting.**"
+    operation: UPDATE
+    resource: "ch.fhnw.voting.PollAsset"
+    transaction: "ch.fhnw.voting.VoteTransaction"
     action: ALLOW
 }
 
