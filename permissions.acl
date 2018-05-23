@@ -28,7 +28,7 @@ rule VoteTransaction {
     participant(m): "ch.fhnw.voting.Voter"
     operation: ALL
     resource(v): "ch.fhnw.voting.PollAsset"
-    transaction(tx): "ch.fhnw.voting.Vote"
+    transaction(tx): "ch.fhnw.voting.VoteTransaction"
     condition: (v.owner.getIdentifier() == m.getIdentifier())
     action: ALLOW
 }
