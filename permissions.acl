@@ -1,56 +1,3 @@
-rule AdminPolls {
-    description: "Can create new Polls"
-    participant(i): "ch.fhnw.voting.Admin"
-    operation: ALL
-    resource(a): "ch.fhnw.voting.PollAsset"
-    condition: (a.poll.CreatorId === i.userId)
-    action: ALLOW
-}
-
-rule AdminVoter {
-    description: "Can create new Voter"
-    participant: "ch.fhnw.voting.Admin"
-    operation: ALL
-    resource: "ch.fhnw.voting.Voter"
-    action: ALLOW
-}
-
-rule ReadVoter {
-    description: "Allow read access"
-    participant(i): "ch.fhnw.voting.Voter"
-    operation: READ
-    resource(a): "ch.fhnw.voting.Voter"
-    condition: (a.userId === i.userId)
-    action: ALLOW
-}
-
-rule UpdateVoter{
-    description: "Allow read and update access for the VoteTransaction"
-    participant(i): "ch.fhnw.voting.Voter"
-    operation: READ, UPDATE
-    resource(a): "ch.fhnw.voting.Voter"
-    transaction(tx): "ch.fhnw.voting.VoteTransaction"
-    condition: (a.userId === i.userId)
-    action: ALLOW
-}
-
-rule ReadPoll {
-    description: "Allow read access"
-    participant: "ch.fhnw.voting.**"
-    operation: READ
-    resource: "ch.fhnw.voting.PollAsset"
-    action: ALLOW
-}
-
-rule UpdatePoll {
-    description: "Allow read access"
-    participant: "ch.fhnw.voting.**"
-    operation: UPDATE
-    resource: "ch.fhnw.voting.PollAsset"
-    transaction: "ch.fhnw.voting.VoteTransaction"
-    action: ALLOW
-}
-
 rule SystemACL {
     description:  "System ACL to permit all access"
     participant: "org.hyperledger.composer.system.Participant"
@@ -67,16 +14,77 @@ rule NetworkAdmin{
   action: ALLOW
 }
 
+rule AdminPollsEdit {
+    description: "Admin can edit his polls"
+    participant(i): "ch.fhnw.voting.Admin"
+    operation: UPDATE
+    resource(a): "ch.fhnw.voting.PollAsset"
+    condition: (a.poll.CreatorId === i.userId)
+    action: ALLOW
+}
+
+rule AdminPollsCreate {
+    description: "Admin can create new Polls"
+    participant: "ch.fhnw.voting.Admin"
+    operation: CREATE
+    resource: "ch.fhnw.voting.PollAsset"
+    action: ALLOW
+}
+
+rule AdminVoter {
+    description: "Can create, delete Voter"
+    participant: "ch.fhnw.voting.Admin"
+    operation: CREATE, DELETE
+    resource: "ch.fhnw.voting.Voter"
+    action: ALLOW
+}
+
+rule ReadVoter {
+    description: "The voter can only read his own participant"
+    participant(i): "ch.fhnw.voting.Voter"
+    operation: READ
+    resource(a): "ch.fhnw.voting.Voter"
+    condition: (a.userId === i.userId)
+    action: ALLOW
+}
+
+rule UpdateVoter{
+    description: "The Voter has read and update access in a VoteTransaction only and only to his own participant"
+    participant(i): "ch.fhnw.voting.Voter"
+    operation: READ, UPDATE
+    resource(a): "ch.fhnw.voting.Voter"
+    transaction(tx): "ch.fhnw.voting.VoteTransaction"
+    condition: (a.userId === i.userId)
+    action: ALLOW
+}
+
+rule ReadPoll {
+    description: "Allow read access to the polls for everyone"
+    participant: "ch.fhnw.voting.**"
+    operation: READ
+    resource: "ch.fhnw.voting.PollAsset"
+    action: ALLOW
+}
+
+rule UpdatePoll {
+    description: "Everyone can only Update the poll in the VoteTransaction"
+    participant: "ch.fhnw.voting.**"
+    operation: UPDATE
+    resource: "ch.fhnw.voting.PollAsset"
+    transaction: "ch.fhnw.voting.VoteTransaction"
+    action: ALLOW
+}
+
 rule VoteTransaction {
     description: "Rule for voting"
     participant: "ch.fhnw.voting.Voter"
-    operation: ALL
+    operation: CREATE
     resource: "ch.fhnw.voting.VoteTransaction"
     action: ALLOW
 }
 
 rule Default {
-    description: "Allow read access"
+    description: "Deny acces to everythin else"
     participant: "ch.fhnw.voting.*"
     operation: ALL
     resource: "ch.fhnw.voting.*"
