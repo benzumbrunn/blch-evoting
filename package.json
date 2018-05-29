@@ -10,7 +10,9 @@
     "pretest": "npm run lint",
     "lint": "eslint .",
     "test": "nyc mocha -t 0 test/*.js && cucumber-js",
-    "rest": "composer-rest-server -c admin@blch-evoting -n never -w true"
+    "network-install": "composer network install --card PeerAdmin@hlfv1 --archiveFile blch-evoting@0.0.1.bna",
+    "network-start": "composer network start --networkName blch-evoting --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card",
+    "rest-start": "composer-rest-server -c admin@blch-evoting -n never -w true"
   },
   "keywords": [
     "composer",
