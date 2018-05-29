@@ -19,6 +19,6 @@ npm start
 ```
 
 ## Authors
-Tobias Bollinger
-Benjamin Zumbrunn
-Esra Kunz
+*Tobias Bollinger
+*Benjamin Zumbrunn
+*Esra Kunz
