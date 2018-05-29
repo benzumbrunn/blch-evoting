@@ -15,6 +15,7 @@ npm run rest-start
 **Start the application**
 ```
 cd angular-app
+npm install
 npm start
 ```
 
