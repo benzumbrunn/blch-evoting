@@ -17,7 +17,7 @@ rule NetworkAdmin{
 rule AdminPollsEdit {
     description: "Admin can edit his polls"
     participant(i): "ch.fhnw.voting.Admin"
-    operation: UPDATE
+    operation: UPDATE, DELETE
     resource(a): "ch.fhnw.voting.PollAsset"
     condition: (a.poll.CreatorId === i.userId)
     action: ALLOW
@@ -34,7 +34,7 @@ rule AdminPollsCreate {
 rule AdminVoter {
     description: "Can create, delete Voter"
     participant: "ch.fhnw.voting.Admin"
-    operation: CREATE, DELETE
+    operation: READ, CREATE, DELETE
     resource: "ch.fhnw.voting.Voter"
     action: ALLOW
 }
