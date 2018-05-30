@@ -83,6 +83,14 @@ rule VoteTransaction {
     action: ALLOW
 }
 
+rule VoteTransactionAdmin {
+    description: "Admin can Read the Vote Transactions"
+    participant: "ch.fhnw.voting.Admin"
+    operation: READ, CREATE
+    resource: "ch.fhnw.voting.VoteTransaction"
+    action: ALLOW
+}
+
 rule Default {
     description: "Deny acces to everythin else"
     participant: "ch.fhnw.voting.*"
