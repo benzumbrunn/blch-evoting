@@ -9,7 +9,10 @@
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/blch-evoting.bna",
     "pretest": "npm run lint",
     "lint": "eslint .",
-    "test": "nyc mocha -t 0 test/*.js && cucumber-js"
+    "test": "nyc mocha -t 0 test/*.js && cucumber-js",
+    "network-install": "composer network install --card PeerAdmin@hlfv1 --archiveFile blch-evoting@0.0.1.bna",
+    "network-start": "composer network start --networkName blch-evoting --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card",
+    "rest-start": "composer-rest-server -c admin@blch-evoting -n never -w true"
   },
   "keywords": [
     "composer",
@@ -19,18 +22,18 @@
   "email": "benzumbrunn@gmail.com",
   "license": "MIT",
   "devDependencies": {
-    "composer-admin": "^0.19.5",
-    "composer-cli": "^0.19.5",
-    "composer-client": "^0.19.5",
-    "composer-common": "^0.19.5",
-    "composer-connector-embedded": "^0.19.5",
-    "composer-cucumber-steps": "^0.19.5",
     "chai": "latest",
     "chai-as-promised": "latest",
+    "composer-admin": "^0.19.5",
+    "composer-cli": "^0.19.5",
+    "composer-client": "^0.19.6",
+    "composer-common": "^0.19.6",
+    "composer-connector-embedded": "^0.19.5",
+    "composer-cucumber-steps": "^0.19.5",
     "cucumber": "^2.2.0",
     "eslint": "latest",
-    "nyc": "latest",
     "mkdirp": "latest",
-    "mocha": "latest"
+    "mocha": "latest",
+    "nyc": "latest"
   }
 }

@@ -1,11 +1,25 @@
 # blch-evoting
 
-voter
-    firstname : str
-    lastname : str
-    mail : str
+A Hyperledger application for an evoting system, developed for the Blockchain module of FHNW.
 
-polls
-    name : str
-    yes : int
-    no : int
+## Quickstart
+
+**Install and start the network**
+```
+npm install
+npm run network-install
+npm run network-start
+npm run rest-start
+```
+
+**Start the application**
+```
+cd angular-app
+npm install
+npm start
+```
+
+## Authors
+* Tobias Bollinger
+* Benjamin Zumbrunn
+* Esra Kunz
